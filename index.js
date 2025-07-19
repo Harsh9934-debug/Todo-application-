@@ -1,10 +1,12 @@
 const express  = require("express");
 const { createTodo } = require("./types");
+const { todo } = require("node:test");
+const { title } = require("process");
 const app = express(); 
 
 app.use(express.json());
 
-app.get("/todo",function(req,res){
+app.get("/todo",async function(req,res){
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload);
     if( !parsedPayload.success){
@@ -15,14 +17,26 @@ app.get("/todo",function(req,res){
     }
 
     //put it in the mongodb
+
+
+    await todo.create({
+        title: createPayload.title,
+        description:createPayload.description,
+        completed: false
+    })
+    res.json({
+        msg:"TODO created"
+    })
 })
 
-app.get("/todos",function(req,res){
-    
-
+app.get("/todos",async function(req,res){
+    const todos = await todo.find({});
+    res.json({
+        todos
+    })
 })
 
-app.get("/completed",function(req,res){
+app.get("/completed",async function(req,res){
     const updaatedPayload = req.body;
     const parsedPayload = createTodo.safeParse(updaatedPayload);
     if( !parsedPayload.success){
@@ -32,5 +46,12 @@ app.get("/completed",function(req,res){
         return;
     }
 
-    //put it in the mongodb
+    await todo.update({
+        _id: req.body.id
+    },{
+        completed:true
+    })
+    res.json({
+        msg:"Todo mark has been updated "
+    })
 })
