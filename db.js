@@ -1,26 +1,15 @@
-// to use the mongoose we have to install 
-// npm install mongoose
+const mongoose = require("mongoose");
 
-const { create } = require("domain")
-const mongoose = require("mongoose")
-const { title } = require("process")
-mongoose.connect("mongodb+srv://harshkumargupta630:meqsXVTivobwo4Cx@cluster0.abqlse5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://harshkumargupta630:meqsXVTivobwo4Cx@cluster0.abqlse5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
-// username :
-// harshkumargupta630
+const todoSchema = mongoose.Schema({
+    title: String,
+    description: String,  // ✅ fixed typo
+    completed: Boolean
+});
 
-// password
-// meqsXVTivobwo4Cx
-
-
-const topdoSchema = mongoose.Schema({
-    title:String,
-    descrription:String,
-    completed:Boolean
-})
-
-const todo = mongoose.model('todos',topdoSchema)
+const Todo = mongoose.model('Todo', todoSchema);  // ✅ PascalCase for model name
 
 module.exports = {
-    todo
-}
+    Todo
+};
