@@ -55,3 +55,7 @@ app.get("/completed",async function(req,res){
         msg:"Todo mark has been updated "
     })
 })
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
