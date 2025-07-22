@@ -6,6 +6,7 @@ const todoSchema = mongoose.Schema({
     title: String,
     description: String,  // ✅ fixed typo
     completed: Boolean
+    
 });
 
 const Todo = mongoose.model('Todo', todoSchema);  // ✅ PascalCase for model name
